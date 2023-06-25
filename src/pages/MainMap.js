@@ -13,7 +13,7 @@ const MAP_TOKEN = process.env.REACT_APP_MAPGLKEY
 let style = dataLayer1
 
 function MainMap(){
-     console.log(process.env)
+     
      const [district,setDistrict] = useState(null);
      const [popup,setPopup] = useState(false);
      const [attribute,setAttribute] = useState({prop:'lit',year:2011})
