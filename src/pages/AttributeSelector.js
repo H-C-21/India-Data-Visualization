@@ -5,9 +5,6 @@ import classes from "./AttributeSelector.module.css"
 
 function AttributeSelector(props){
 
-    function attributeChangeHandler(event){
-        props.onSelect({prop:event.target.value,year:props.attribute.year})
-    }
     function yearChangeHandler(event){
         props.onSelect({prop:props.attribute.prop,year:event.target.value})
     }
@@ -18,7 +15,7 @@ function AttributeSelector(props){
           <h2>Select your Parameter</h2>
           <select
             name="attribute"
-            onChange={attributeChangeHandler}
+            onChange={props.ach}
             value={props.attribute.prop}
             id = 'attri'
           >
@@ -35,6 +32,12 @@ function AttributeSelector(props){
             onChange={yearChangeHandler}
             marks 
           />
+        </div>
+        <div className={classes.labels}>
+          <p>1951</p>
+          <p>1981</p>
+          <p>2011</p>
+          
         </div>
         </div>
         

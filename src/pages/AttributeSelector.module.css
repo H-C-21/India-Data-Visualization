@@ -14,7 +14,17 @@
 }
 
 .slider1{
-    padding: 1rem;
     margin: 4px 1rem;
     color: white
+}
+
+.labels{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.labels p{
+    margin-top: 0px;
+    font-size: 1rem;
 }

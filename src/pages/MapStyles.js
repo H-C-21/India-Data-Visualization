@@ -14,7 +14,8 @@ export const dataLayer1 = {
           [5, '#fc4e2a'],
           [6, '#e31a1c'],
           [7, '#bd0026'],
-          [8, '#800026']
+          [8, '#800026'],
+      
         ]
       },
       'fill-opacity': 0.8,
