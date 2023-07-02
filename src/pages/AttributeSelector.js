@@ -1,9 +1,8 @@
-import { Fragment } from "react";
 import { Slider } from "@mui/material";
 
 import classes from "./AttributeSelector.module.css"
-import { useEffect } from "react";
-import { useState } from "react";
+import { useEffect,useState,Fragment,memo } from "react";
+
 
 function AttributeSelector(props){
 
@@ -40,10 +39,10 @@ function AttributeSelector(props){
             value={props.attribute.prop}
             id = 'attri'
           >
-            <option value="lit"><p>Literacy Rate</p></option>
-            <option value="pop"><p>Population</p></option>
-            <option value="den"><p>Population Density</p></option>
-            <option value="sratio"><p>Sex Ratio</p></option>
+            <option value="lit">Literacy Rate</option>
+            <option value="pop">Population</option>
+            <option value="den">Population Density</option>
+            <option value="sratio">Sex Ratio</option>
           </select></div>
           <div className={classes.slider1}>
           <Slider min = {1951} max ={2011}
@@ -67,4 +66,4 @@ function AttributeSelector(props){
 }
 
 
-export default AttributeSelector;
+export default memo(AttributeSelector);

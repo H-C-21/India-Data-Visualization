@@ -1,11 +1,17 @@
 import React from "react";
+import classes from './footer.module.css'
+import { Fragment } from "react";
 
-function footer(){
+function Footer(){
     return(
-        <div>
-
+        <Fragment>
+        <hr />
+        <div className={classes.footer}> 
+        
         </div>
+        </Fragment>
+
     )
 }
 
-export default footer
+export default Footer

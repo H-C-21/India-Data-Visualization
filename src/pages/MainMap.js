@@ -6,6 +6,7 @@ import { useEffect,useState,Fragment,useMemo } from 'react';
 import { dataLayer1,dataLayer2 } from './MapStyles';
 import classes from './MainMap.module.css'
 import AttributeSelector from './AttributeSelector.js';
+import Scale from '../components/MapScale'
 import { updatePercentiles } from '../utils.ts';
 
 
@@ -22,11 +23,13 @@ function MainMap(){
      setAllData(require('../Data/Map_fin.json'))
     }
 
-    const data = useMemo(() => {
+    const [data,scale] = useMemo(() => {
+
       let new_prop = attribute.prop + '_' + attribute.year
       let curr_prop = attribute.prop + '_' + '2011'
       let old_prop = attribute.prop + '_' + '1961'
-      return allData && updatePercentiles(allData,f=>{
+    
+    return allData && updatePercentiles(allData,attribute.prop,f=>{
         if(f.properties[new_prop] === '-'){
           return ;
         }
@@ -37,7 +40,8 @@ function MainMap(){
           return ;
         }
         return [Number(f.properties[curr_prop]),Number(f.properties[old_prop])]
-      });
+      })
+     
     }, [allData, attribute]);
 
 
@@ -67,15 +71,17 @@ function MainMap(){
         setAttribute({prop:event.target.value,year:attribute.year})
       }
      
-const bounds = [[52,-3],[116,45]]
+const bounds = [[55,-3],[116,45]]
 
   return(
     <Fragment>
+     
       <div className={classes.mapContainer}>
         <div className={classes.map}>
+        <Scale range={scale} attribute={attribute.prop}/>
         <Map 
         initialViewState={{
-            longitude: 82.3,
+            longitude: 80.3,
             latitude: 23.2,
             zoom: 4,
             maxPitch: 1,
