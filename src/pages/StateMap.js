@@ -1,0 +1,138 @@
+import classes from './StateMap.module.css'
+
+import {useState,useEffect} from 'react'
+import { useLocation,useNavigate } from "react-router";
+import Map, {Source, Layer} from 'react-map-gl';
+import {center,bbox} from '@turf/turf'
+import GraphTab from '../components/Graphtab';
+import { Fab, Grid, Item } from '@mui/material';
+
+const MAP_TOKEN = process.env.REACT_APP_MAPGLKEY
+
+
+const layerStyle = {
+    id: 'StateMapData',
+    type: 'fill',
+    paint: {
+        "fill-color": "#00ffff"
+      }
+  };
+
+function StateMap(prop){
+
+    const navigate = useNavigate()
+    const locate = useLocation();
+    const [stateData,setStateData] = useState(locate.state);
+
+  //  if(stateData === null){
+  //   const tempdata = require('../Data/Map_fin.json').features
+      
+  //   setStateData(tempdata.find(obj => {
+  //       return obj.properties.st_nm === window.location.pathname.slice(1)
+  //     }))
+  //  }
+
+   useEffect(()=>{
+
+    async function loading(){
+      let tempd = require('../Data/Map_fin.json')
+      const tempdata = tempd.features
+      const state_name = window.location.pathname.slice(1)
+
+     return await tempdata.find(obj => {
+        return obj.properties.st_nm === state_name
+      })
+    }
+
+    if(stateData === null){
+      let tp = loading()
+      setStateData(tp)
+    }
+
+
+   },[stateData])
+  
+
+   let c,bound = 1
+
+   if(stateData !== null){
+    
+    c = center(stateData)
+ 
+
+   if(c.geometry){
+   c = c.geometry.coordinates
+   }
+   bound = bbox(stateData)
+   }
+
+  function fitBounds(event){
+    if(bound){
+    event.target.fitBounds(bound)
+    }
+    console.log('lul')
+    return;
+  }
+
+  function gotoMap(){
+    navigate('/')
+  }
+
+    return(
+        <div className={classes.container}>
+          <div className={classes.backbtn}>
+          <Fab color="white" aria-label="add" onClick={gotoMap}>
+          <div className={classes.backarrow}>
+            <img src = 'https://img.icons8.com/?size=2x&id=40217&format=png' width='32px'></img>
+          </div>
+          </Fab>
+          </div>
+          
+          <div className={classes.innercontainer}>
+          <Grid container spacing={0.5}>
+            <Grid item  lg={6} md={5} sm={12} xs={12}>
+            <div className={classes.statemap}>
+              <Map 
+              initialViewState={{
+                  longitude: c[0],
+                  latitude: c[1],
+                  zoom: 6,
+                  maxZoom: 7,
+                  dragPan: false,
+                  maxPitch: 1,
+                  dragRotate: false,
+                  
+              }}
+              scrollZoom={false}
+              style={{cursor: 'default'}}
+              paddingOptions={{left:30,right:30,top:30,bottom:30}}
+              onLoad={fitBounds}
+              mapboxAccessToken={MAP_TOKEN}
+              interactiveLayerIds = {['StateMapData']}
+            >
+
+              <Source type="geojson" data={stateData}>
+              <Layer {...layerStyle} />
+              </Source>
+            </Map>
+       <div className={classes.label}>
+        <div>{stateData.properties.st_nm}</div>
+       </div>
+
+            </div></Grid>
+            
+            <Grid item  lg={6} md={5} sm={12}>
+            <div className={classes.graphcontainer}>
+               <GraphTab info={stateData.properties}></GraphTab>
+            </div></Grid>
+          </Grid>
+        </div>
+
+        </div>
+    )
+}
+
+export function loader(){
+    return null
+}
+export default StateMap;

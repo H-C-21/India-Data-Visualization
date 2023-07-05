@@ -5,7 +5,7 @@ import { Fragment } from "react";
 function Footer(){
     return(
         <Fragment>
-        <hr />
+        
         <div className={classes.footer}> 
         
         </div>

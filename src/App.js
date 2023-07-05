@@ -4,15 +4,22 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 
 
 import RootLayout from './pages/RootLayout';
-import MainMap from './pages/MainMap';
-let data1 = require('./Data/Map_fin.json');
+import MainMap,{loader as MainMapLoader} from './pages/MainMap';
+import StateMap from './pages/StateMap';
+import {loader as stateloader} from './pages/StateMap';
 
 const router = createBrowserRouter([
   { path: '/',
     element: <RootLayout/>,
+    id: 'main',
     children:[{ 
       index: true,
-      element: <MainMap/>
+      element: <MainMap/>,
+      loader: MainMapLoader
+    },{
+      path : ':id',
+      element: <StateMap/>,
+      loader: stateloader
     }
 
     ] 
@@ -22,12 +29,6 @@ const router = createBrowserRouter([
 
 
 function App() {
- try{ 
-  if(!localStorage.getItem('map')){
-    localStorage.setItem('map', JSON.stringify(data1))                                                                            
-  }}catch(err){
-      localStorage.setItem('map', '')
-  }
 
   return (
     <RouterProvider router = { router }/>

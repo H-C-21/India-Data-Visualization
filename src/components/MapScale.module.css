@@ -28,6 +28,20 @@
     justify-content: center;
 }
 
+@media only screen and (max-width: 768px){
+    .scale{
+        width: 14rem;
+        height: 8rem;
+        background-color: transparent !important;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        left: 15rem;
+        bottom: 8vh;
+        /* align-items: center; */
+        justify-content: center;
+    }
+}
 
 
 .marking{

@@ -10,19 +10,40 @@ padding: 6px;
 margin-bottom: 0.8rem !important;
 }
 
+.drag1{
+  
+}
 .maincontainer{
     width: 16rem;
     padding: 16px;
     padding-bottom: 6px !important;
-    margin: 1rem;
+    margin: 2.8rem;
     position: absolute;
-    top: 4rem;
+    top: 3rem;
     right: 0;
     border-radius: 0.5rem;
-    
+    cursor: grab !important;
     background-color: rgba(15, 16, 17, 0.96);
     color: white;
 
+}
+
+@media screen and (max-width: 767px) {
+  .maincontainer{
+    width: 12rem;
+    padding: 12px;
+    padding-bottom: 6px !important;
+    margin: 0.5rem;
+    position: absolute;
+    top: 3rem;
+    right: 0;
+    border-radius: 0.5rem;
+    cursor: grab !important;
+    background-color: rgba(15, 16, 17, 0.96);
+    color: white;
+
+  }
+  
 }
 
 .slider1{
@@ -46,7 +67,6 @@ margin-bottom: 0.8rem !important;
  
   --gray: #2a3c4d;
   --darkgray: #243443;
-    appearance: none;
     outline: 0;
     border: 0;
     box-shadow: none;
@@ -66,16 +86,11 @@ margin-bottom: 0.8rem !important;
   .select {
     position: relative;
     display: flex;
-  
     height: 2.75em;
     border-radius: .25em;
-    overflow: hidden;
+
   }
 
-option p{
-    padding: 0 8px;
-  }
-  /* Arrow */
   .select::after {
     content: '\25BC';
     position: absolute;
@@ -84,7 +99,6 @@ option p{
     padding: 0.75em;
     background-color: #1a242c;
     transition: .25s all ease;
-    pointer-events: none;
   }
   /* Transition */
   .select:hover::after {
