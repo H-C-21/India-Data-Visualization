@@ -1,6 +1,6 @@
 import classes from './StateMap.module.css'
 
-import {useState,useEffect} from 'react'
+import {useState} from 'react'
 import { useLoaderData, useLocation,useNavigate } from "react-router";
 import Map, {Source, Layer} from 'react-map-gl';
 import {center,bbox} from '@turf/turf'
@@ -34,42 +34,13 @@ function StateMap(prop){
     
    
     
-  //  if(stateData === null){
-  //   const tempdata = require('../Data/Map_fin.json').features
-      
-  //   setStateData(tempdata.find(obj => {
-  //       return obj.properties.st_nm === window.location.pathname.slice(1)
-  //     }))
-  //  }
-  
-  
 
-  //  useEffect(()=>{
-
-  //   async function loading(){
-  //     let tempd = require('../Data/Map_fin.json')
-  //     tempd = JSON.parse(tempd)
-  //     const tempdata = tempd.features
-  //     const state_name = window.location.pathname.slice(1)
-
-  //    return await tempdata.find(obj => {
-  //       return obj.properties.st_nm === state_name
-  //     })
-  //   }
-  //   console.log('2')
-  //   if(stateData === null){
-  //     let tp = loading();
-  //     console.log('1')
-  //     setStateData(tp)
-  //   }
-
-  //  },[])
   
    async function loading(){
     let tempd = require('../Data/Map_fin.json')
     // tempd = JSON.parse(tempd)
     const tempdata = tempd.features
-    console.log(tempdata)
+  
     const state_name = window.location.pathname.slice(1)
     
 
@@ -81,7 +52,7 @@ function StateMap(prop){
    let c,bound = [1,2]
 
    if(stateData !== null){
-    //  console.log(stateData)
+   
       c = center(stateData)
       c = c.geometry.coordinates
      
@@ -103,7 +74,6 @@ function StateMap(prop){
     if(bound){
     event.target.fitBounds(bound)
     }
-    console.log('lul')
     return;
   }
 
