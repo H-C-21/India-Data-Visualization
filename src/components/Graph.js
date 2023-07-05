@@ -15,7 +15,7 @@ function Graph(props){
 
 
     return(
-        <ResponsiveContainer width={600} height={400}>               
+        <ResponsiveContainer width={'90%'} height={420}>               
         <LineChart data={props.data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />

@@ -7,10 +7,12 @@ import RootLayout from './pages/RootLayout';
 import MainMap,{loader as MainMapLoader} from './pages/MainMap';
 import StateMap from './pages/StateMap';
 import {loader as stateloader} from './pages/StateMap';
+import ErrorPage from './pages/ErrorPage';
 
 const router = createBrowserRouter([
   { path: '/',
     element: <RootLayout/>,
+   
     id: 'main',
     children:[{ 
       index: true,
@@ -19,7 +21,9 @@ const router = createBrowserRouter([
     },{
       path : ':id',
       element: <StateMap/>,
-      loader: stateloader
+      loader: stateloader,
+      
+
     }
 
     ] 

@@ -1,11 +1,11 @@
 import classes from './StateMap.module.css'
 
 import {useState,useEffect} from 'react'
-import { useLocation,useNavigate } from "react-router";
+import { useLoaderData, useLocation,useNavigate } from "react-router";
 import Map, {Source, Layer} from 'react-map-gl';
 import {center,bbox} from '@turf/turf'
 import GraphTab from '../components/Graphtab';
-import { Fab, Grid, Item } from '@mui/material';
+import { Fab, Grid} from '@mui/material';
 
 const MAP_TOKEN = process.env.REACT_APP_MAPGLKEY
 
@@ -18,12 +18,22 @@ const layerStyle = {
       }
   };
 
+
 function StateMap(prop){
 
-    const navigate = useNavigate()
-    const locate = useLocation();
-    const [stateData,setStateData] = useState(locate.state);
+  const locate = useLocation()
 
+  let d = useLoaderData();
+  if(d===null){
+    d = locate.state
+  }
+
+    const navigate = useNavigate()
+    
+    const [stateData,setStateData] = useState(d);
+    
+   
+    
   //  if(stateData === null){
   //   const tempdata = require('../Data/Map_fin.json').features
       
@@ -31,40 +41,63 @@ function StateMap(prop){
   //       return obj.properties.st_nm === window.location.pathname.slice(1)
   //     }))
   //  }
-
-   useEffect(()=>{
-
-    async function loading(){
-      let tempd = require('../Data/Map_fin.json')
-      const tempdata = tempd.features
-      const state_name = window.location.pathname.slice(1)
-
-     return await tempdata.find(obj => {
-        return obj.properties.st_nm === state_name
-      })
-    }
-
-    if(stateData === null){
-      let tp = loading()
-      setStateData(tp)
-    }
-
-
-   },[stateData])
+  
   
 
-   let c,bound = 1
+  //  useEffect(()=>{
+
+  //   async function loading(){
+  //     let tempd = require('../Data/Map_fin.json')
+  //     tempd = JSON.parse(tempd)
+  //     const tempdata = tempd.features
+  //     const state_name = window.location.pathname.slice(1)
+
+  //    return await tempdata.find(obj => {
+  //       return obj.properties.st_nm === state_name
+  //     })
+  //   }
+  //   console.log('2')
+  //   if(stateData === null){
+  //     let tp = loading();
+  //     console.log('1')
+  //     setStateData(tp)
+  //   }
+
+  //  },[])
+  
+   async function loading(){
+    let tempd = require('../Data/Map_fin.json')
+    // tempd = JSON.parse(tempd)
+    const tempdata = tempd.features
+    console.log(tempdata)
+    const state_name = window.location.pathname.slice(1)
+    
+
+   return await tempdata.find(obj => {
+      return obj.properties.st_nm === state_name
+    })
+  }
+
+   let c,bound = [1,2]
 
    if(stateData !== null){
+    //  console.log(stateData)
+      c = center(stateData)
+      c = c.geometry.coordinates
+     
+     bound = bbox(stateData)
+  }
     
-    c = center(stateData)
- 
 
-   if(c.geometry){
-   c = c.geometry.coordinates
-   }
-   bound = bbox(stateData)
-   }
+  //   c = center(stateData)
+  //   console.log(c)
+
+  //  if(c && c.geometry){
+  //  c = c.geometry.coordinates
+  //  }
+  //  bound = bbox(stateData)
+  
+  
 
   function fitBounds(event){
     if(bound){
@@ -133,6 +166,26 @@ function StateMap(prop){
 }
 
 export function loader(){
-    return null
-}
+ 
+  async function loading(){
+
+    let tempd = require('../Data/Map_fin.json')
+    const tempdata = tempd['features']
+    const state_name = window.location.pathname.slice(1)
+    if(state_name){
+    let req = null
+    let top = tempdata.map((e)=>{
+      if((e.properties.st_nm === state_name)){
+          req = e}
+    })
+      return req
+    }
+      else return null;
+    }
+    
+
+  let kp = loading();
+    return kp;
+  }
+
 export default StateMap;
