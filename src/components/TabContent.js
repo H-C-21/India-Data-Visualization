@@ -9,7 +9,7 @@ function TabContent(props) {
     return (
       <div role="tabpanel" hidden={value !== index} className={classes.content}>
         {value === index && (
-          <Box sx={{ p: 3 }}>
+          <Box>
             {children}
           </Box>
         )}
