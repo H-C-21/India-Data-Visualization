@@ -1,5 +1,3 @@
-# Getting Started with Create React App
+# India Data Visualizer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-
+https://india-data-visualization.web.app/
